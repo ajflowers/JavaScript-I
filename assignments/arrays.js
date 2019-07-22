@@ -124,12 +124,23 @@ let allYears = inventory.map(function(item) {
 console.log(allYears);
 
 //5
+function isOld(total, current) {
+    if (current < 2000) {
+        return total + 1;
+    } else {
+        return total;
+    }
+}
 
-//6 - it has a callback too!
+console.log(allYears.reduce(isOld, 0));
+
+
+//6
 function funGerman(car) {
     return car.car_make === "Audi" || car.car_make === "BMW";      
 }
 
 let ringsRoundels = inventory.filter(funGerman);
 
-console.log (JSON.stringify(ringsRoundels));
+//console.log(JSON.stringify(ringsRoundels));
+console.table(ringsRoundels);

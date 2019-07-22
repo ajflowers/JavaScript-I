@@ -107,5 +107,29 @@ for (var i = 1; i < inventory.length; i++) {
 }
 console.log(JSON.stringify(BMWAndAudi));
 
+// Stretch: additional array methods
+//3
 
+let allModels = inventory.map(function(item) {
+    return item.car_model;
+})
+allModels.sort();
+console.log(allModels)
 
+//4
+
+let allYears = inventory.map(function(item) {
+    return item.car_year;
+});
+console.log(allYears);
+
+//5
+
+//6 - it has a callback too!
+function funGerman(car) {
+    return car.car_make === "Audi" || car.car_make === "BMW";      
+}
+
+let ringsRoundels = inventory.filter(funGerman);
+
+console.log (JSON.stringify(ringsRoundels));

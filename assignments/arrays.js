@@ -79,6 +79,15 @@ for (var i = 0; i < inventory.length; i++) {
 carModels.sort();
 console.log(carModels);
 
+// with .map()
+
+let allModels = inventory.map(function(item) {
+    return item.car_model;
+})
+allModels.sort();
+console.log(allModels)
+
+
 // ==== Challenge 4 ====
 // The accounting team needs all the years from every car on the lot. Create a new array from the dealer data containing only the car years and log the result in the console.
 let carYears = [];
@@ -86,6 +95,14 @@ for (var i = 0; i < inventory.length; i++) {
     carYears.push(inventory[i].car_year);
 }
 console.log(carYears);
+
+// with .map()
+
+let allYears = inventory.map(function(item) {
+    return item.car_year;
+});
+console.log(allYears);
+
 
 // ==== Challenge 5 ====
 // The car lot manager needs to find out how many cars are older than the year 2000. Using the carYears array you just created, find out how many cars were made before the year 2000 by populating the array oldCars and logging it's length.
@@ -97,33 +114,8 @@ for (var i = 0; i < carYears.length; i++) {
 }
 console.log(oldCars.length); 
 
-// ==== Challenge 6 ====
-// A buyer is interested in seeing only BMW and Audi cars within the inventory.  Return an array that only contains BMW and Audi cars.  Once you have populated the BMWAndAudi array, use JSON.stringify() to show the results of the array in the console.
-let BMWAndAudi = [];
-for (var i = 0; i < inventory.length; i++) {
-    if (inventory[i].car_make === "BMW" || inventory[i].car_make === "Audi") {
-        BMWAndAudi.push(inventory[i]);
-    }
-}
-console.log(JSON.stringify(BMWAndAudi));
+// using .reduce()
 
-// Stretch: additional array methods
-//3
-
-let allModels = inventory.map(function(item) {
-    return item.car_model;
-})
-allModels.sort();
-console.log(allModels)
-
-//4
-
-let allYears = inventory.map(function(item) {
-    return item.car_year;
-});
-console.log(allYears);
-
-//5
 function isOld(total, current) {
     if (current < 2000) {
         return total + 1;
@@ -134,8 +126,17 @@ function isOld(total, current) {
 
 console.log(allYears.reduce(isOld, 0));
 
+// ==== Challenge 6 ====
+// A buyer is interested in seeing only BMW and Audi cars within the inventory.  Return an array that only contains BMW and Audi cars.  Once you have populated the BMWAndAudi array, use JSON.stringify() to show the results of the array in the console.
+let BMWAndAudi = [];
+for (var i = 0; i < inventory.length; i++) {
+    if (inventory[i].car_make === "BMW" || inventory[i].car_make === "Audi") {
+        BMWAndAudi.push(inventory[i]);
+    }
+}
+console.log(JSON.stringify(BMWAndAudi));
 
-//6
+// using .filter()
 function funGerman(car) {
     return car.car_make === "Audi" || car.car_make === "BMW";      
 }
@@ -144,16 +145,32 @@ let ringsRoundels = inventory.filter(funGerman);
 
 console.table(ringsRoundels);
 
-//again, but via callbacks
+
+// *****************************************************
+//multiple searches via callbacks
 
 let prefMakes = ["BMW", "Audi"];
-let prefYears = [1995, 2005];
+let prefYears = [2000, 2005];
 
+//function to search by make - takes an array of makes to search for and returns an array of all inventory entries of that make
 function byMake(makes) {
-
+    function rightMake(item) {
+        return makes.includes(item.car_make);
+    }
+    return inventory.filter(rightMake);
 }
 
+//function to search by inventory
 function byYear(years) {
-
+    function rightYear(item) {
+        return item.car_year >= years[0] && item.car_year <= years[1];
+    }
+    return inventory.filter(rightYear);
 }
 
+function searchBy(searchType, params) {
+    return searchType(params);
+}
+
+console.table(searchBy(byMake, prefMakes));
+console.table(searchBy(byYear, prefYears));

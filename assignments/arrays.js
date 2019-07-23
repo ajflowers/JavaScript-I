@@ -152,6 +152,7 @@ console.table(ringsRoundels);
 let prefMakes = ["BMW", "Audi"];
 let prefYears = [2000, 2005];
 
+
 //function to search by make - takes an array of makes to search for and returns an array of all inventory entries of that make
 function byMake(makes) {
     function rightMake(item) {
@@ -160,13 +161,15 @@ function byMake(makes) {
     return inventory.filter(rightMake);
 }
 
-//function to search by inventory
+//function to search by inventory - takes an array of form [oldestYear, newestYear] and returns an array of all inventory entries within that range
 function byYear(years) {
     function rightYear(item) {
         return item.car_year >= years[0] && item.car_year <= years[1];
     }
     return inventory.filter(rightYear);
 }
+
+//main search function: takes one of the above search functions and an appropriate array for its inputs
 
 function searchBy(searchType, params) {
     return searchType(params);
